@@ -1,0 +1,190 @@
+[colors]
+bar-bg = #3a3a3a
+bar-fg = #cccccc
+selected = #4c4c4c
+power-button = #d14040
+module-underline = #3348bf
+good-green = #60b73a
+bad-red = #d82a24
+
+[bar/cold]
+bottom = false
+width = 100%
+height = 27px
+
+background = ${colors.bar-bg}
+foreground = ${colors.bar-fg}
+
+padding-right = 2
+module-margin-right = 2
+underline-size = 2
+underline-color = = ${colors.module-underline}
+
+font-0 = profont-semi:size=10
+font-1 = FontAwesome:size=10
+font-2 = siji:size=10
+
+modules-left = i3
+modules-center = xwindow
+modules-right = network vpncheck battery pavolume updates clock powermenu
+
+[module/i3]
+type = internal/i3
+
+format = <label-state> <label-mode>
+format-spacing = 0
+
+label-focused = %index%
+label-focused-padding = 2
+label-focused-margin = 0
+label-focused-font = 0
+label-focused-foreground = #fff
+label-focused-background = ${colors.selected}
+label-focused-underline = ${colors.module-underline}
+
+label-unfocused = %index%
+label-unfocused-padding = 2
+label-unfocused-margin = 0
+label-unfocused-font = 0
+label-unfocused-foreground = #fff
+
+label-urgent = %index%
+label-urgen-font = 0
+
+label-visible = %index%
+
+[module/xwindow]
+type = internal/xwindow
+
+label = %title%
+label-maxlen = 90
+
+[module/weather]
+type = custom/script
+interval = 10
+format = <label>
+format-prefix = " "
+format-prefix-foreground = ${colors.bar-fg}
+exec = ~/.config/polybar/weather
+
+[module/pavolume]
+type = custom/script
+interval = 0
+label = %output%
+exec = ~/.config/polybar/pavolume.sh
+click-right = exec pavucontrol
+click-left = ~/.config/polybar/pavolume.sh --togmute
+scroll-up = ~/.config/polybar/pavolume.sh --up
+scroll-down = ~/.config/polybar/pavolume.sh --down
+format-underline = ${colors.module-underline}
+
+[module/network]
+type = internal/network
+interface = wlo1
+interval = 3.0
+
+format-connected = <ramp-signal> <label-connected>
+format-connected-underline = ${colors.good-green}
+format-disconnected = <label-disconnected>
+format-disconnected-underline = ${colors.bad-red}
+
+label-connected = %essid%
+label-connected-foreground = ${colors.bar-fg}
+label-disconnected = not connected
+label-disconnected-foreground = ${colors.bad-red}
+
+ramp-signal-0 = 
+ramp-signal-1 = 
+ramp-signal-2 = 
+ramp-signal-3 = 
+ramp-signal-4 = 
+ramp-signal-5 = 
+
+click-left = nm-connection-editor
+
+[module/battery]
+type = internal/battery
+
+full-at = 98
+battery = BAT0
+adapter = ADP1
+
+#format-offset = 3
+
+format-charging = <animation-charging> <label-charging>
+format-charging-underline = ${colors.good-green}
+format-discharging = <ramp-capacity> <label-discharging>
+format-discharging-underline = ${colors.module-underline}
+format-full = <label-full>
+format-full-underline = ${colors.good-green}
+label-charging = %percentage%%
+label-discharging = %percentage%%
+
+label-full =  100%
+
+ramp-capacity-0 = 
+ramp-capacity-1 = 
+ramp-capacity-2 = 
+ramp-capacity-3 = 
+ramp-capacity-4 = 
+
+animation-charging-0 =  
+animation-charging-1 = 
+animation-charging-2 = 
+animation-charging-3 = 
+animation-charging-4 = 
+
+animation-charging-framerate = 750
+
+[module/updates]
+type = custom/script
+interval = 1200
+
+format = <label>
+format-underline = #dc322f
+label = "%output:0:30%"
+
+exec = ~/.config/polybar/pkg.sh
+exec-if = "ping -q -w 2 -c 1 176.34.135.167 > /dev/null"
+
+[module/clock]
+type = internal/date
+
+interval = 1.0
+time = %H:%M
+
+format =  <label>
+format-foreground = ${colors.bar-fg}
+format-underline = ${colors.module-underline}
+
+label = %time%
+label-font = 1
+label-foreground = ${colors.bar-fg}
+
+[module/powermenu]
+type = custom/menu
+
+format-spacing = 1
+format-margin = 1
+format-foreground = ${colors.power-button}
+
+label-font = 1
+label-open =    
+label-close =   cancel
+label-separator = |
+
+menu-0-0 = shutdown
+menu-0-0-exec = sudo poweroff
+menu-0-1 = reboot
+menu-0-1-exec = sudo reboot now
+menu-0-2 = lock
+menu-0-2-exec = i3lock-fancy
+
+[module/vpncheck]
+type = custom/script
+exec = pgrep openvpn
+interval = 5
+label = vpn
+format-underline = #268bd2
+format-prefix = " "
+format-prefix-foreground = #5b

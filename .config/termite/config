@@ -1,0 +1,43 @@
+[options]
+font = ProFont 10
+
+[colors]
+
+# special
+foreground      = #d0d0d0
+foreground_bold = #d0d0d0
+cursor          = #d0d0d0
+background      = #212121
+
+# black
+color0  = #151515
+color8  = #505050
+
+# red
+color1  = #ac4142
+color9  = #ac4142
+
+# green
+color2  = #7e8e50
+color10 = #7e8e50
+
+# yellow
+color3  = #e5b567
+color11 = #e5b567
+
+# blue
+color4  = #6c99bb
+color12 = #6c99bb
+
+# magenta
+color5  = #9f4e85
+color13 = #9f4e85
+
+# cyan
+color6  = #7dd6cf
+color14 = #7dd6cf
+
+# white
+color7  = #d0d0d0
+color15 = #f5f5f5
+
